@@ -23,7 +23,7 @@ class CurrentDate
 			int Day = sc.nextInt();
 
 			if (Day < 1 || Day > 31)
-				throw new InvalidDayException(day);
+				throw new InvalidDayException(Day);
 
 			System.out.print("Enter the month : ");
 			int Month = sc.nextInt();

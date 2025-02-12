@@ -1,0 +1,90 @@
+Bank Schema:
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Age INT CHECK (Age > 18),
+    AccountType VARCHAR(10) CHECK (AccountType IN ('Savings', 'Current'))
+);
+
+CREATE TABLE Accounts (
+    AccountID INT PRIMARY KEY,
+    CustomerID INT,
+    Balance DECIMAL(10,2) CHECK (Balance >= 0),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID) ON DELETE CASCADE
+);
+
+CREATE TABLE Transactions (
+    TransactionID INT PRIMARY KEY,
+    AccountID INT,
+    Amount DECIMAL(10,2) CHECK (Amount > 0),
+    TransactionType VARCHAR(20) CHECK (TransactionType IN ('Deposit', 'Withdrawal')),
+    FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID) ON DELETE CASCADE
+);
+
+
+INSERT INTO Customers VALUES (1, 'Alice Brown', 30, 'Savings');
+INSERT INTO Customers VALUES (2, 'Bob Johnson', 25, 'Current');
+INSERT INTO Customers VALUES (3, 'Charlie Kim', 40, 'Savings');
+INSERT INTO Customers VALUES (4, 'David Smith', 22, 'Current');
+INSERT INTO Customers VALUES (5, 'Emma Davis', 35, 'Savings');
+
+INSERT INTO Accounts VALUES (101, 1, 5000.00);
+INSERT INTO Accounts VALUES(102, 2, 2000.50);
+INSERT INTO Accounts VALUES(103, 3, 8000.75);
+INSERT INTO Accounts VALUES(104, 4, 1500.00);
+INSERT INTO Accounts VALUES(105, 5, 10000.00);
+
+
+INSERT INTO Transactions VALUES (1001, 101, 500.00, 'Deposit');
+INSERT INTO Transactions VALUES (1002, 102, 200.00, 'Withdrawal');
+INSERT INTO Transactions VALUES (1003, 103, 1000.00, 'Deposit');
+INSERT INTO Transactions VALUES (1004, 104, 150.00, 'Withdrawal');
+INSERT INTO Transactions VALUES (1005, 105, 2000.00, 'Deposit');
+
+
+ 
+Sailor Database
+CREATE TABLE Sailors (
+    SailorID INT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Age INT CHECK (Age >= 18),
+    Rank VARCHAR(50) CHECK (Rank IN ('Captain', 'First Mate', 'Crew'))
+);
+
+CREATE TABLE Boats (
+    BoatID INT PRIMARY KEY,
+    BoatName VARCHAR(100) NOT NULL,
+    BoatType VARCHAR(50) CHECK (BoatType IN ('Yacht', 'Fishing', 'Cargo')),
+    Capacity INT CHECK (Capacity > 0)
+);
+
+CREATE TABLE Reservations (
+    ReservationID INT PRIMARY KEY,
+    SailorID INT,
+    BoatID INT,
+    ReservationDate varchar2(20) NOT NULL,
+    FOREIGN KEY (SailorID) REFERENCES Sailors(SailorID) ON DELETE CASCADE,
+    FOREIGN KEY (BoatID) REFERENCES Boats(BoatID) ON DELETE CASCADE
+);
+
+
+INSERT INTO Sailors VALUES (1, 'John Smith', 35, 'Captain');
+INSERT INTO Sailors VALUES (2, 'Emily Davis', 28, 'First Mate');
+INSERT INTO Sailors VALUES (3, 'Michael Brown', 22, 'Crew');
+INSERT INTO Sailors VALUES (4, 'Sarah Wilson', 40, 'Captain');
+INSERT INTO Sailors VALUES (5, 'David Lee', 30, 'Crew');
+
+INSERT INTO Boats VALUES (101, 'Sea Breeze', 'Yacht', 10);
+INSERT INTO Boats VALUES (102, 'Deep Explorer', 'Fishing', 5);
+INSERT INTO Boats VALUES (103, 'Ocean King', 'Cargo', 20);
+INSERT INTO Boats VALUES (104, 'Blue Wave', 'Yacht', 8);
+INSERT INTO Boats VALUES (105, 'Storm Rider', 'Fishing', 6);
+
+
+INSERT INTO Reservations VALUES (1001, 1, 101, '2024-06-01');
+INSERT INTO Reservations VALUES (1002, 2, 101, '2024-06-02');
+INSERT INTO Reservations VALUES (1003, 3, 103, '2024-06-03');
+INSERT INTO Reservations VALUES (1004, 4, 103, '2024-06-04');
+INSERT INTO Reservations VALUES (1005, 5, 105, '2024-06-05');
+
+

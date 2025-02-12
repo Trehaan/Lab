@@ -1,0 +1,19 @@
+
+// Correct
+with total_reservations as (
+	select boatid, boatname, count(reservationid) as totreservations 
+	from reservations 
+	natural join boats 
+	group by boatid, boatname
+)
+select boatid, boatname, totreservations from total_reservations where totreservations = (select MAX(totreservations) from total_reservations);
+
+
+
+SELECT sailorid, name, age, rank
+FROM Sailors s
+natural join reservations r
+join boats b on r.boatid = b.boatid and b.boattype = 'Yacht'
+group by sailorid, name, age, rank
+having count(b.boatid) >= 1;
+
